@@ -1,0 +1,86 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans-serif: "Inter";
+  --font-serif: "Lora";
+  --font-mono: "Inconsolata";
+
+  --color-red: #ff5252;
+  --color-purple: #a445ed;
+
+  --color-black: #050505;
+  --color-black-tint: #1f1f1f;
+  --color-faint-black: #2d2d2d;
+  --color-light-black: #3a3a3a;
+
+  --color-gray: #757575;
+  --color-faint-gray: #e9e9e9;
+  --color-light-gray: #f4f4f4;
+  --color-white: #ffffff;
+
+  --text-heading-l-small-screen: 2.5rem;
+  --text-heading-l-tablet: 3.5rem;
+  --text-heading-l-large-screen: 4rem;
+  --text-heading-s: 1.3rem;
+  --text-heading-m: 1.6rem;
+
+  --text-body-m: 1.25rem;
+}
+
+body {
+  font-family: "Inter", sans-serif;
+}
+
+.sans-serif {
+  font-family: "Inter", sans-serif;
+}
+
+.serif {
+  font-family: "Lora", serif;
+}
+
+.mono {
+  font-family: "Inconsolata", monospace;
+}
+
+.container {
+  width: min(90%, 900px);
+  /* border: 1px solid red; */
+  margin-inline: auto;
+}
+
+.loader {
+  width: 48px;
+  height: 48px;
+  border: 3px solid #a445ed;
+  border-radius: 50%;
+  display: inline-block;
+  position: relative;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+}
+.loader::after {
+  content: "";
+  box-sizing: border-box;
+  position: absolute;
+  left: 0;
+  top: 0;
+  background: #ff3d00;
+  width: 16px;
+  height: 16px;
+  transform: translate(-50%, 50%);
+  border-radius: 50%;
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+p {
+  text-wrap: balance;
+}
