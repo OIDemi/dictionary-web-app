@@ -5,6 +5,7 @@ export const Form = ({ text, setText }) => {
   const [focus, setFocus] = useState(false);
   return (
     <form
+      onSubmit={(e) => e.preventDefault()}
       className={`container flex items-center bg-light-gray p-3 rounded-sm ${
         focus ? " outline-purple outline-2" : ""
       }`}
