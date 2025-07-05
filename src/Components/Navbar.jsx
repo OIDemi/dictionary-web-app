@@ -4,10 +4,16 @@ import VerticalLine from "../assets/vertical-line.svg?react";
 import Moon from "../assets/icon-moon.svg?react";
 import DownArrow from "../assets/icon-arrow-down.svg?react";
 import { ConfigProvider, Switch } from "antd";
-export const Navbar = () => {
+export const Navbar = ({ theme, setTheme }) => {
   const [selectedFont, setSelectedFont] = useState("sans-serif");
+  const [isChecked, setIsChecked] = useState(false);
+
   const onChange = (checked) => {
     console.log(`switch to ${checked}`);
+    setIsChecked((check) => !check);
+    if (checked) {
+      setTheme("dark");
+    } else setTheme("");
   };
 
   useEffect(() => {
@@ -30,7 +36,7 @@ export const Navbar = () => {
             <select
               value={selectedFont}
               onChange={(e) => setSelectedFont(e.target.value)}
-              className='outline-none text-[18px] text-faint-black font-bold appearance-none'
+              className='outline-none text-[18px] text-faint-black font-bold appearance-none dark:text-white'
             >
               <option value='sans-serif'>Sans Serif</option>
               <option value='serif'>Serif</option>
@@ -39,8 +45,8 @@ export const Navbar = () => {
             <DownArrow />
           </div>
           <VerticalLine />
-          <Switch defaultChecked onChange={onChange} />
-          <Moon />
+          <Switch checked={isChecked} onChange={onChange} />
+          <Moon className={`${theme ? "text-purple" : "#838383"}`} />
         </div>
       </header>
     </ConfigProvider>

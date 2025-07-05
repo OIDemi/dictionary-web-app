@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
 import AudioLogo from "../assets/icon-play.svg?react";
 import { ItemList } from "../util/ItemList";
+import NewIconWindow from "../assets/icon-new-window.svg?react";
 export const Main = ({ text }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(false);
   const [list, setList] = useState([]);
-
+  const [audioPlay, setAudioPlay] = useState(null);
   const url = `https://api.dictionaryapi.dev/api/v2/entries/en/${text}`;
+
   useEffect(() => {
     if (!text) return;
     let active = true;
@@ -17,9 +19,11 @@ export const Main = ({ text }) => {
         const res = await fetch(url);
         if (!res.ok) throw new Error("Something went wrong");
         const data = await res.json();
+        const audio = data[0]?.phonetics[data[0]?.phonetics.length - 1]?.audio;
         if (active) {
           setIsLoading(false);
           setList(data);
+          setAudioPlay(audio);
         }
       } catch (err) {
         setError(err.message);
@@ -30,6 +34,13 @@ export const Main = ({ text }) => {
     fetchData();
     return () => (active = false);
   }, [url, text]);
+
+  function handlePlay() {
+    if (audioPlay) {
+      const audio = new Audio(audioPlay);
+      audio.play().catch((err) => console.error(err));
+    }
+  }
 
   if (isLoading)
     return (
@@ -42,7 +53,7 @@ export const Main = ({ text }) => {
     return (
       <div className='container mt-10 flex flex-col justify-center items-center text-center gap-3'>
         <p className='text-[5rem]'>😐</p>
-        <p className='text-faint-black font-bold text-[20px]'>
+        <p className='text-faint-black font-bold text-[20px] dark:text-white'>
           No Definitions Found
         </p>
         <p className='text-gray'>
@@ -56,7 +67,7 @@ export const Main = ({ text }) => {
     return (
       <div className='container mt-10 flex flex-col justify-center items-center text-center gap-3'>
         <p className='text-[5rem]'>😊</p>
-        <p className='text-faint-black font-bold text-[20px]'>
+        <p className='text-faint-black font-bold text-[20px] dark:text-white'>
           Search for a word
         </p>
       </div>
@@ -65,20 +76,32 @@ export const Main = ({ text }) => {
     <main className='container mt-6'>
       <section className='flex items-center justify-between'>
         <div>
-          <h1 className=' text-heading-l-small-screen lg:text-heading-l-large-screen md:text-heading-l-tablet text-faint-black font-bold'>
+          <h1 className=' text-heading-l-small-screen lg:text-heading-l-large-screen md:text-heading-l-tablet text-faint-black font-bold dark:text-white'>
             {list[0]?.word}
           </h1>
-          <p className='text-purple'>{list[0]?.phonetic}</p>
+          <p className='text-purple dark:text-purple'>{list[0]?.phonetic}</p>
         </div>
-        <AudioLogo className='cursor-pointer' />
+        {audioPlay && (
+          <AudioLogo className='cursor-pointer' onClick={handlePlay} />
+        )}
       </section>
       <section className='mt-6 flex flex-col gap-5'>
         {list[0]?.meanings?.map((item) => (
           <ItemList key={item.partOfSpeech} item={item} />
         ))}
-      </section>
-      <section className=''>
-        <a href=''>Source</a>
+        <section className=' mt-5 '>
+          <p className='text-gray flex gap-7'>
+            Source{" "}
+            <a
+              href={list[0]?.sourceUrls}
+              target='_blank'
+              className='text-black dark:text-white flex items-center gap-3'
+            >
+              {list[0]?.sourceUrls}
+              <NewIconWindow />
+            </a>
+          </p>
+        </section>
       </section>
     </main>
   );
