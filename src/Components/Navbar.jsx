@@ -24,9 +24,8 @@ export const Navbar = () => {
       <div className='flex justify-between items-center gap-4'>
         <div className='flex items-center gap-4'>
           <div className='dropdown dropdown-end '>
-            <div
+            <button
               tabIndex={0}
-              role='button'
               className={`btn m-1 ${
                 isChecked ? "bg-black text-white" : "bg-white text-black"
               }  border-none shadow-none px-4 py-2`}
@@ -41,7 +40,7 @@ export const Navbar = () => {
                 )}
               </p>
               <DownArrow />
-            </div>
+            </button>
             <ul
               tabIndex={0}
               className={`dropdown-content menu ${
