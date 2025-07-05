@@ -87,7 +87,7 @@ export const Main = ({ text }) => {
       </section>
       <section className='mt-6 flex flex-col gap-5'>
         {list[0]?.meanings?.map((item) => (
-          <ItemList key={item.partOfSpeech} item={item} />
+          <ItemList key={item.definitions[0].definition} item={item} />
         ))}
         <section className=' mt-5 '>
           <p className='text-gray flex gap-7'>
