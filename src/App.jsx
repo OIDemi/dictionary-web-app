@@ -4,7 +4,8 @@ import { Main } from "./Components/Main";
 import { Navbar } from "./Components/Navbar";
 
 function App() {
-  const [text, setText] = useState("keyboard");
+  const [text, setText] = useState("");
+
   return (
     <>
       <Navbar />

@@ -1,5 +1,10 @@
 @import "tailwindcss";
 
+@plugin "daisyui" {
+  themes: light --default;
+}
+
+@custom-variant dark (&:where(.dark, .dark *));
 @theme {
   --font-sans-serif: "Inter";
   --font-serif: "Lora";
@@ -29,6 +34,7 @@
 
 body {
   font-family: "Inter", sans-serif;
+  min-height: 100vh;
 }
 
 .sans-serif {
